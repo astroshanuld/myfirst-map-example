@@ -1,5 +1,5 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:map_exam/model/note.dart';
 import 'package:map_exam/repository/repository.dart';
 import 'package:map_exam/widget/list_note.dart';
 
@@ -12,7 +12,7 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-  List<Note> dataNote = [];
+  List<QueryDocumentSnapshot<Object?>> docsNote = [];
   String uid = '';
   bool isContentHidden = false;
   int? editIndex;
@@ -25,14 +25,18 @@ class _HomeScreenState extends State<HomeScreen> {
       setUserUid: (value) {
         setState(() {
           uid = value;
-          NoteRepository.getData(
-            uid: uid,
-            setData: (value) => setState(() {
-              dataNote = value;
-            }),
-          );
         });
+        getData();
       },
+    );
+  }
+
+  void getData() {
+    NoteRepository.getData(
+      uid: uid,
+      setData: (value) => setState(() {
+        docsNote = value;
+      }),
     );
   }
 
@@ -45,7 +49,7 @@ class _HomeScreenState extends State<HomeScreen> {
           CircleAvatar(
             backgroundColor: Colors.blue.shade200,
             child: Text(
-              dataNote.length.toString(),
+              docsNote.length.toString(),
               style:
                   const TextStyle(fontWeight: FontWeight.bold, fontSize: 22.0),
             ),
@@ -56,20 +60,22 @@ class _HomeScreenState extends State<HomeScreen> {
         ],
       ),
       body: ListView.separated(
-        itemCount: dataNote.length,
+        itemCount: docsNote.length,
         separatorBuilder: (context, index) => const Divider(
           color: Colors.blueGrey,
         ),
         itemBuilder: (context, index) {
-          Note itemNote = dataNote[index];
+          // QueryDocumentSnapshot<Object?> itemNote = docsNote[index];
           return ListNote(
+            key: UniqueKey(),
             isContentHidden: isContentHidden,
-            itemNote: itemNote,
+            itemDocs: docsNote[index],
             editIndex: editIndex,
             itemIndex: index,
             setEditIndex: (value) => setState(() {
               editIndex = value;
             }),
+            onRefresh: getData,
           );
         },
       ),

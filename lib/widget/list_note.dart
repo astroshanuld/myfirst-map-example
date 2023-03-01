@@ -1,19 +1,23 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:map_exam/model/note.dart';
+import 'package:map_exam/repository/repository.dart';
 
 class ListNote extends StatefulWidget {
   final bool isContentHidden;
-  final Note itemNote;
+  final QueryDocumentSnapshot<Object?> itemDocs;
   final int itemIndex;
   final ValueSetter<int?> setEditIndex;
   final int? editIndex;
+  final VoidCallback onRefresh;
   const ListNote(
       {Key? key,
       required this.isContentHidden,
-      required this.itemNote,
+      required this.itemDocs,
       required this.itemIndex,
       required this.setEditIndex,
-      required this.editIndex})
+      required this.editIndex,
+      required this.onRefresh})
       : super(key: key);
 
   @override
@@ -21,6 +25,29 @@ class ListNote extends StatefulWidget {
 }
 
 class _ListNoteState extends State<ListNote> {
+  Note dataNote = Note();
+
+  @override
+  void initState() {
+    super.initState();
+    initData();
+  }
+
+  void initData() {
+    Map<String, dynamic> dataJson =
+        widget.itemDocs.data() as Map<String, dynamic>;
+    Note data = Note.fromJson(dataJson);
+    setState(() {
+      dataNote = data;
+    });
+  }
+
+  void delete() {
+    widget.setEditIndex(null);
+    NoteRepository.deleteData(docId: widget.itemDocs.id);
+    widget.onRefresh();
+  }
+
   @override
   Widget build(BuildContext context) {
     return ListTile(
@@ -39,15 +66,14 @@ class _ListNoteState extends State<ListNote> {
                       Icons.delete,
                       color: Colors.blue,
                     ),
-                    onPressed: () {},
+                    onPressed: delete,
                   ),
                 ],
               ),
             )
           : null,
-      title: Text(widget.itemNote.title ?? ''),
-      subtitle:
-          widget.isContentHidden ? null : Text(widget.itemNote.content ?? ''),
+      title: Text(dataNote.title ?? ''),
+      subtitle: widget.isContentHidden ? null : Text(dataNote.content ?? ''),
       onTap: () {},
       onLongPress: () => widget.editIndex == widget.itemIndex
           ? widget.setEditIndex(null)

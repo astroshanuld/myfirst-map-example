@@ -4,25 +4,23 @@ CollectionReference notes = FirebaseFirestore.instance.collection('note');
 
 class NoteRepository {
   static Future<void> getData(
-      {required String uid, required ValueSetter<List<Note>> setData}) async {
-    List<Note> allData = [];
-
+      {required String uid,
+      required ValueSetter<List<QueryDocumentSnapshot<Object?>>>
+          setData}) async {
     try {
       QuerySnapshot<Object?> res =
           await notes.where('id', isEqualTo: uid).get();
-      res.docs.forEach(
-        (element) {
-          Map<String, dynamic> dataJson =
-              element.data() as Map<String, dynamic>;
-          Note data = Note.fromJson(dataJson);
-          allData.add(data);
-        },
-      );
-      setData(allData);
+      setData(res.docs);
     } catch (e) {
       print(e.toString());
     }
+  }
 
-    // inspect(res.docs);
+  static Future<void> deleteData({required String docId}) async {
+    try {
+      await notes.doc(docId).delete();
+    } catch (e) {
+      print(e.toString());
+    }
   }
 }
