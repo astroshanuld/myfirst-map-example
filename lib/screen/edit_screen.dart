@@ -47,23 +47,23 @@ class _EditScreenState extends State<EditScreen> {
   }
 
   void submit() {
-    // if (widget.status == 'add') {
-    //   NoteRepository.createData(
-    //           data: Note(
-    //               id: widget.userUid,
-    //               content: _descriptionController.text,
-    //               title: _titleController.text))
-    //       .then((value) => Navigator.pop(context, true));
-    // }
-    // if (widget.status == 'edit') {
-    //   NoteRepository.updateData(
-    //           docId: widget.docId!,
-    //           data: Note(
-    //               id: widget.userUid,
-    //               content: _descriptionController.text,
-    //               title: _titleController.text))
-    //       .then((value) => Navigator.pop(context, true));
-    // }
+    if (widget.status == 'add') {
+      NoteRepository.createData(
+              data: Note(
+                  id: widget.userUid,
+                  content: _descriptionController.text,
+                  title: _titleController.text))
+          .then((value) => Navigator.pop(context, true));
+    }
+    if (widget.status == 'edit') {
+      NoteRepository.updateData(
+              docId: widget.docId!,
+              data: Note(
+                  id: widget.userUid,
+                  content: _descriptionController.text,
+                  title: _titleController.text))
+          .then((value) => Navigator.pop(context, true));
+    }
   }
 
   @override
