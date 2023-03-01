@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:map_exam/model/note.dart';
 import 'package:map_exam/repository/repository.dart';
@@ -13,6 +14,7 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen> {
   List<Note> dataNote = [];
   String uid = '';
+  bool isContentHidden = false;
 
   @override
   void initState() {
@@ -82,29 +84,41 @@ class _HomeScreenState extends State<HomeScreen> {
             //   ),
             // ),
             title: Text(itemNote.title ?? ''),
-            subtitle: Text(itemNote.content ?? ''),
+            subtitle: isContentHidden ? null : Text(itemNote.content ?? ''),
             onTap: () {},
             onLongPress: () {},
           );
         },
       ),
-      // floatingActionButton: Row(
-      //   mainAxisAlignment: MainAxisAlignment.end,
-      //   children: [
-      //     FloatingActionButton(
-      //         child: const Icon(Icons.menu),
-      //         tooltip: 'Show less. Hide notes content',
-      //         onPressed: () {}),
+      floatingActionButton: Row(
+        mainAxisAlignment: MainAxisAlignment.end,
+        children: [
+          isContentHidden
+              ? FloatingActionButton(
+                  heroTag: null,
+                  child: const Icon(Icons.menu),
+                  tooltip: 'Show more. Show notes content',
+                  onPressed: () => setState(() {
+                        isContentHidden = false;
+                      }))
+              : FloatingActionButton(
+                  heroTag: null,
+                  child: const Icon(Icons.unfold_less),
+                  tooltip: 'Show less. Hide notes content',
+                  onPressed: () => setState(() {
+                        isContentHidden = true;
+                      })),
 
-      //     /* Notes: for the "Show More" icon use: Icons.menu */
+          /* Notes: for the "Show More" icon use: Icons.menu */
 
-      //     FloatingActionButton(
-      //       child: const Icon(Icons.add),
-      //       tooltip: 'Add a new note',
-      //       onPressed: () {},
-      //     ),
-      //   ],
-      // ),
+          FloatingActionButton(
+            heroTag: null,
+            child: const Icon(Icons.add),
+            tooltip: 'Add a new note',
+            onPressed: () {},
+          ),
+        ],
+      ),
     );
   }
 }
