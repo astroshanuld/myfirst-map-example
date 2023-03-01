@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:map_exam/repository/repository.dart';
+import 'package:map_exam/screen/edit_screen.dart';
 import 'package:map_exam/widget/list_note.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -71,6 +72,7 @@ class _HomeScreenState extends State<HomeScreen> {
             isContentHidden: isContentHidden,
             itemDocs: docsNote[index],
             editIndex: editIndex,
+            userUid: uid,
             itemIndex: index,
             setEditIndex: (value) => setState(() {
               editIndex = value;
@@ -104,7 +106,9 @@ class _HomeScreenState extends State<HomeScreen> {
             heroTag: null,
             child: const Icon(Icons.add),
             tooltip: 'Add a new note',
-            onPressed: () {},
+            onPressed: () => Navigator.push(
+                    context, EditScreen.route(status: 'add', userUid: uid))
+                .then((value) => getData()),
           ),
         ],
       ),
