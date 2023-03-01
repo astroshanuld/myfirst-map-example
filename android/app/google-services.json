@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "346023063846",
+    "project_id": "myfirstfone-df8af",
+    "storage_bucket": "myfirstfone-df8af.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:346023063846:android:13dbbae264d4abe2d091e7",
+        "android_client_info": {
+          "package_name": "com.example.map_exam"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "346023063846-n9mnq8cdl5d4q91tocqfifm3g613933q.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD2fhrLxbKwohyxJWsXxhY_uwaaAZbSZiY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "346023063846-n9mnq8cdl5d4q91tocqfifm3g613933q.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

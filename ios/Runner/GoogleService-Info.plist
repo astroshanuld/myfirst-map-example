@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>CLIENT_ID</key>
+	<string>346023063846-i1qshrge5ia10qqia3f8kccg6vv93thd.apps.googleusercontent.com</string>
+	<key>REVERSED_CLIENT_ID</key>
+	<string>com.googleusercontent.apps.346023063846-i1qshrge5ia10qqia3f8kccg6vv93thd</string>
+	<key>ANDROID_CLIENT_ID</key>
+	<string>346023063846-bqiau440u7a3a5q328fvrp3u6k0octeo.apps.googleusercontent.com</string>
+	<key>API_KEY</key>
+	<string>AIzaSyDEIST2yUZNu5eGUS3ASPd3H93sCaHavdQ</string>
+	<key>GCM_SENDER_ID</key>
+	<string>346023063846</string>
+	<key>PLIST_VERSION</key>
+	<string>1</string>
+	<key>BUNDLE_ID</key>
+	<string>com.example.mapExam</string>
+	<key>PROJECT_ID</key>
+	<string>myfirstfone-df8af</string>
+	<key>STORAGE_BUCKET</key>
+	<string>myfirstfone-df8af.appspot.com</string>
+	<key>IS_ADS_ENABLED</key>
+	<false></false>
+	<key>IS_ANALYTICS_ENABLED</key>
+	<false></false>
+	<key>IS_APPINVITE_ENABLED</key>
+	<true></true>
+	<key>IS_GCM_ENABLED</key>
+	<true></true>
+	<key>IS_SIGNIN_ENABLED</key>
+	<true></true>
+	<key>GOOGLE_APP_ID</key>
+	<string>1:346023063846:ios:5ef0dc829a15d0e0d091e7</string>
+</dict>
+</plist>
