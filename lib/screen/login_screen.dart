@@ -1,7 +1,6 @@
-import 'dart:developer';
-
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:map_exam/repository/repository.dart';
 import 'package:map_exam/screen/home_screen.dart';
 
 class LoginScreen extends StatefulWidget {
@@ -19,10 +18,8 @@ class _LoginScreenState extends State<LoginScreen> {
 
   Future<void> submit() async {
     try {
-      final UserCredential credential = await FirebaseAuth.instance
-          .signInWithEmailAndPassword(
-              email: _usernameController.text,
-              password: _passwordController.text);
+      await AuthRepository.signIn(
+          email: _usernameController.text, password: _passwordController.text);
       Navigator.pushAndRemoveUntil(
           context, HomeScreen.route(), (route) => false);
       // inspect(credential);

@@ -1,6 +1,6 @@
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:map_exam/screen/login_screen.dart';
+import 'package:map_exam/model/note.dart';
+import 'package:map_exam/repository/repository.dart';
 
 class HomeScreen extends StatefulWidget {
   static Route route() => MaterialPageRoute(builder: (_) => const HomeScreen());
@@ -11,16 +11,26 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
+  List<Note> dataNote = [];
+  String uid = '';
+
   @override
   void initState() {
     super.initState();
-    FirebaseAuth.instance.authStateChanges().listen((User? user) {
-      if (user == null) {
-        Navigator.push(context, LoginScreen.route());
-      } else {
-        print('Logged in!');
-      }
-    });
+    AuthRepository.checkAuth(
+      context: context,
+      setUserUid: (value) {
+        setState(() {
+          uid = value;
+          NoteRepository.getData(
+            uid: uid,
+            setData: (value) => setState(() {
+              dataNote = value;
+            }),
+          );
+        });
+      },
+    );
   }
 
   @override
@@ -31,9 +41,10 @@ class _HomeScreenState extends State<HomeScreen> {
         actions: [
           CircleAvatar(
             backgroundColor: Colors.blue.shade200,
-            child: const Text(
-              '4',
-              style: TextStyle(fontWeight: FontWeight.bold, fontSize: 22.0),
+            child: Text(
+              dataNote.length.toString(),
+              style:
+                  const TextStyle(fontWeight: FontWeight.bold, fontSize: 22.0),
             ),
           ),
           const SizedBox(
@@ -42,35 +53,40 @@ class _HomeScreenState extends State<HomeScreen> {
         ],
       ),
       body: ListView.separated(
-        itemCount: 4,
+        itemCount: dataNote.length,
         separatorBuilder: (context, index) => const Divider(
           color: Colors.blueGrey,
         ),
-        itemBuilder: (context, index) => ListTile(
-          trailing: SizedBox(
-            width: 110.0,
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.end,
-              children: [
-                IconButton(
-                  icon: const Icon(Icons.edit, color: Colors.blue),
-                  onPressed: () {},
-                ),
-                IconButton(
-                  icon: const Icon(
-                    Icons.delete,
-                    color: Colors.blue,
-                  ),
-                  onPressed: () {},
-                ),
-              ],
-            ),
-          ),
-          title: const Text('Note title'),
-          subtitle: const Text('Note content'),
-          onTap: () {},
-          onLongPress: () {},
-        ),
+        itemBuilder: (context, index) {
+          Note itemNote = dataNote[index];
+          return ListTile(
+            // trailing: SizedBox(
+            //   width: 110.0,
+            //   child: Row(
+            //     mainAxisAlignment: MainAxisAlignment.end,
+            //     children: [
+            //       IconButton(
+            //         icon: const Icon(Icons.edit, color: Colors.blue),
+            //         onPressed: () {
+            //           FirebaseAuth.instance.signOut();
+            //         },
+            //       ),
+            //       IconButton(
+            //         icon: const Icon(
+            //           Icons.delete,
+            //           color: Colors.blue,
+            //         ),
+            //         onPressed: () {},
+            //       ),
+            //     ],
+            //   ),
+            // ),
+            title: Text(itemNote.title ?? ''),
+            subtitle: Text(itemNote.content ?? ''),
+            onTap: () {},
+            onLongPress: () {},
+          );
+        },
       ),
       // floatingActionButton: Row(
       //   mainAxisAlignment: MainAxisAlignment.end,
