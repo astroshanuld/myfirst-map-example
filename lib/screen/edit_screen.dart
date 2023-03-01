@@ -47,23 +47,23 @@ class _EditScreenState extends State<EditScreen> {
   }
 
   void submit() {
-    if (widget.status == 'add') {
-      NoteRepository.createData(
-              data: Note(
-                  id: widget.userUid,
-                  content: _descriptionController.text,
-                  title: _titleController.text))
-          .then((value) => Navigator.pop(context, true));
-    }
-    if (widget.status == 'edit') {
-      NoteRepository.updateData(
-              docId: widget.docId!,
-              data: Note(
-                  id: widget.userUid,
-                  content: _descriptionController.text,
-                  title: _titleController.text))
-          .then((value) => Navigator.pop(context, true));
-    }
+    // if (widget.status == 'add') {
+    //   NoteRepository.createData(
+    //           data: Note(
+    //               id: widget.userUid,
+    //               content: _descriptionController.text,
+    //               title: _titleController.text))
+    //       .then((value) => Navigator.pop(context, true));
+    // }
+    // if (widget.status == 'edit') {
+    //   NoteRepository.updateData(
+    //           docId: widget.docId!,
+    //           data: Note(
+    //               id: widget.userUid,
+    //               content: _descriptionController.text,
+    //               title: _titleController.text))
+    //       .then((value) => Navigator.pop(context, true));
+    // }
   }
 
   @override
@@ -101,7 +101,7 @@ class _EditScreenState extends State<EditScreen> {
             TextFormField(
               controller: _titleController,
               initialValue: null,
-              enabled: true,
+              enabled: widget.status == 'view' ? false : true,
               decoration: const InputDecoration(
                 hintText: 'Type the title here',
               ),
@@ -113,7 +113,7 @@ class _EditScreenState extends State<EditScreen> {
             Expanded(
               child: TextFormField(
                   controller: _descriptionController,
-                  enabled: true,
+                  enabled: widget.status == 'view' ? false : true,
                   initialValue: null,
                   maxLines: null,
                   expands: true,
