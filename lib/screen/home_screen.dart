@@ -1,7 +1,7 @@
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:map_exam/model/note.dart';
 import 'package:map_exam/repository/repository.dart';
+import 'package:map_exam/widget/list_note.dart';
 
 class HomeScreen extends StatefulWidget {
   static Route route() => MaterialPageRoute(builder: (_) => const HomeScreen());
@@ -15,6 +15,7 @@ class _HomeScreenState extends State<HomeScreen> {
   List<Note> dataNote = [];
   String uid = '';
   bool isContentHidden = false;
+  int? editIndex;
 
   @override
   void initState() {
@@ -61,32 +62,14 @@ class _HomeScreenState extends State<HomeScreen> {
         ),
         itemBuilder: (context, index) {
           Note itemNote = dataNote[index];
-          return ListTile(
-            // trailing: SizedBox(
-            //   width: 110.0,
-            //   child: Row(
-            //     mainAxisAlignment: MainAxisAlignment.end,
-            //     children: [
-            //       IconButton(
-            //         icon: const Icon(Icons.edit, color: Colors.blue),
-            //         onPressed: () {
-            //           FirebaseAuth.instance.signOut();
-            //         },
-            //       ),
-            //       IconButton(
-            //         icon: const Icon(
-            //           Icons.delete,
-            //           color: Colors.blue,
-            //         ),
-            //         onPressed: () {},
-            //       ),
-            //     ],
-            //   ),
-            // ),
-            title: Text(itemNote.title ?? ''),
-            subtitle: isContentHidden ? null : Text(itemNote.content ?? ''),
-            onTap: () {},
-            onLongPress: () {},
+          return ListNote(
+            isContentHidden: isContentHidden,
+            itemNote: itemNote,
+            editIndex: editIndex,
+            itemIndex: index,
+            setEditIndex: (value) => setState(() {
+              editIndex = value;
+            }),
           );
         },
       ),
