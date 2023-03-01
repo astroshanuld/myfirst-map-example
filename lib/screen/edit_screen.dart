@@ -73,17 +73,19 @@ class _EditScreenState extends State<EditScreen> {
         leading: Container(),
         centerTitle: true,
         title: Text(widget.status == 'view'
-            ? 'View note'
+            ? 'View Note'
             : widget.status == 'edit'
-                ? 'Edit note'
-                : 'Add new note'),
+                ? 'Edit Note'
+                : 'Add New Note'),
         actions: [
-          IconButton(
-              icon: const Icon(
-                Icons.check_circle,
-                size: 30,
-              ),
-              onPressed: submit),
+          widget.status == 'view'
+              ? const SizedBox.shrink()
+              : IconButton(
+                  icon: const Icon(
+                    Icons.check_circle,
+                    size: 30,
+                  ),
+                  onPressed: submit),
           IconButton(
               icon: const Icon(
                 Icons.cancel_sharp,
@@ -99,7 +101,7 @@ class _EditScreenState extends State<EditScreen> {
             TextFormField(
               controller: _titleController,
               initialValue: null,
-              enabled: widget.status == 'view' ? false : true,
+              enabled: true,
               decoration: const InputDecoration(
                 hintText: 'Type the title here',
               ),
@@ -111,7 +113,7 @@ class _EditScreenState extends State<EditScreen> {
             Expanded(
               child: TextFormField(
                   controller: _descriptionController,
-                  enabled: widget.status == 'view' ? false : true,
+                  enabled: true,
                   initialValue: null,
                   maxLines: null,
                   expands: true,
